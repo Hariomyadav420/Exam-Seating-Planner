@@ -1,0 +1,54 @@
+EXAM SEATING PLAN GENERATOR - QUICK START GUIDE
+================================================
+
+GETTING STARTED
+---------------
+1. The application is running at http://localhost:5000
+2. Navigate to the different portals using the navigation menu
+
+ADMIN WORKFLOW
+--------------
+1. Go to Admin Dashboard
+2. Upload Student Data (CSV/Excel)
+   - Required columns: Roll No, Name, Course/Program, Semester, Email, Subject Code
+   - Sample file: sample_students.csv
+3. Upload Room Data (CSV/Excel)
+   - Required columns: Room No, Building, Rows, Columns, Capacity
+   - Sample file: sample_rooms.csv
+4. Select allocation method:
+   - Anti-Cheating: Separates same-subject students by 2+ seats (Recommended)
+   - Roll-wise: Sequential allocation by roll number
+   - Random: Random seat assignment
+5. Click "Generate Seating Plan"
+6. Export options:
+   - Generate All Admit Cards (PDF with QR codes)
+   - Export Seating Plan (Excel file)
+
+STUDENT PORTAL
+--------------
+1. Enter your roll number
+2. View your seat allocation details
+3. Download your admit card (PDF)
+
+INVIGILATOR PANEL
+-----------------
+1. Select a room from the dropdown
+2. View visual seat map with student allocations
+3. See student list with attendance checkboxes
+4. Export room-wise student list (Excel)
+
+KEY FEATURES
+------------
+- Anti-cheating algorithm ensures fair seating
+- QR codes on admit cards for verification
+- Interactive seat maps with color coding
+- Room utilization analytics
+- Activity logging for audit trail
+
+SAMPLE DATA
+-----------
+Two sample CSV files are included:
+- sample_students.csv: 10 sample students
+- sample_rooms.csv: 3 sample rooms
+
+Use these to test the system before uploading your actual data.
