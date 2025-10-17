@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Exam Seating Plan Generator{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-8 mx-auto">
+
+    <div class="text-center mb-5">
+      <h1 class="display-4">Exam Seating Plan Generator</h1>
+      <hr class="my-3 mx-auto main-divider">
+      <p class="lead">Automated seating allocation with anti-cheating algorithm</p>
+    </div>
+
+    <div class="features-section">
+      <div class="row g-4 justify-content-center">
+
+        <div class="col-md-4">
+          <div class="card h-100 text-center">
+            <div class="card-body">
+              <i class="bi bi-shield-check text-primary" style="font-size: 3rem;"></i>
+              <h5 class="card-title mt-3">Anti-Cheating</h5>
+              <p class="card-text">Smart algorithm separates students with same subject by 2+ seats</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card h-100 text-center">
+            <div class="card-body">
+              <i class="bi bi-file-earmark-pdf text-danger" style="font-size: 3rem;"></i>
+              <h5 class="card-title mt-3">PDF Admit Cards</h5>
+              <p class="card-text">Generate admit cards with QR codes for all students</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card h-100 text-center">
+            <div class="card-body">
+              <i class="bi bi-file-earmark-spreadsheet text-success" style="font-size: 3rem;"></i>
+              <h5 class="card-title mt-3">Excel Export</h5>
+              <p class="card-text">Download complete seating plans in Excel format</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-5 mb-5 p-4 shadow-lg border-0 quick-access-box">
+    <h3 class="text-center mb-4 text-primary">Quick Access</h3>
+    <div class="d-grid gap-3">
+
+        {% if logged_in %}
+        <a href="{{ url_for('admin') }}" class="btn btn-primary btn-lg mb-3 quick-access-btn">
+            <i class="bi bi-gear"></i> Go to Admin Dashboard
+        </a>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger btn-lg mb-3 quick-access-btn">
+            <i class="bi bi-box-arrow-right"></i> Logout
+        </a>
+
+        {% else %}
+        <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg mb-3 quick-access-btn">
+            <i class="bi bi-person-lock"></i> Admin Login
+        </a>
+        <a href="{{ url_for('register') }}" class="btn btn-secondary btn-lg mb-3 quick-access-btn">
+            <i class="bi bi-person-plus"></i> Register New User
+        </a>
+        {% endif %}
+        
+        <a href="{{ url_for('student_portal') }}" class="btn btn-info btn-lg mb-3 quick-access-btn">
+            <i class="bi bi-person"></i> Student Portal - Check Your Seat
+        </a>
+        <a href="{{ url_for('invigilator_panel') }}" class="btn btn-success btn-lg mb-3 quick-access-btn">
+            <i class="bi bi-clipboard-check"></i> Invigilator Panel - View Room Lists
+        </a>
+    </div>
+</div>
+
+    <!-- <div class="card mt-5 mb-5 p-4 shadow-lg border-0 quick-access-box">
+      <h3 class="text-center mb-4 text-primary">Quick Access</h3>
+      <div class="d-grid gap-3">
+        <a href="/admin" class="btn btn-primary btn-lg mb-3 quick-access-btn">
+          <i class="bi bi-gear"></i> Admin Dashboard - Upload & Generate
+        </a>
+        <a href="/student" class="btn btn-info btn-lg mb-3 quick-access-btn">
+          <i class="bi bi-person"></i> Student Portal - Check Your Seat
+        </a>
+        <a href="/invigilator" class="btn btn-success btn-lg mb-3 quick-access-btn">
+          <i class="bi bi-clipboard-check"></i> Invigilator Panel - View Room Lists
+        </a>
+      </div>
+    </div> -->
+
+    <div class="card mt-5">
+      <div class="card-body">
+        <h5 class="card-title">Key Features</h5>
+        <ul class="list-unstyled">
+          <li><i class="bi bi-check-circle-fill text-success"></i> Upload student and room data via CSV/Excel</li>
+          <li><i class="bi bi-check-circle-fill text-success"></i> Three allocation modes: Anti-cheating, Roll-wise,
+            Random</li>
+          <li><i class="bi bi-check-circle-fill text-success"></i> Interactive visual seat maps with tooltips</li>
+          <li><i class="bi bi-check-circle-fill text-success"></i> Room utilization analytics</li>
+          <li><i class="bi bi-check-circle-fill text-success"></i> Attendance marking interface</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

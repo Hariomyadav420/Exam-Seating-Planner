@@ -1,0 +1,623 @@
+ html, body { 
+  background: linear-gradient(135deg, #e0f7fa 0%, #f0f8ff 100%) !important;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"; 
+}
+
+.navbar.custom-navbar {
+    background-color: #ffffff !important; 
+    border-bottom: 1px solid #e9ecef;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+
+main {
+    flex: 1;
+}
+
+main.container {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.navbar-brand {
+    font-weight: 700; 
+    color: #007bff !important; 
+}
+
+.nav-link {
+    font-weight: 500;
+    color: #495057 !important;
+}
+
+.nav-link:hover {
+    color: #007bff !important;
+}
+
+
+.card {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); 
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); 
+    border: none; 
+}
+
+.card:hover {
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); 
+    transform: translateY(-8px); 
+}
+/*
+.card-body i {
+    font-size: 3rem !important; 
+    transition: transform 0.3s ease;
+    padding: 15px;
+    border-radius: 50%;
+    background-color: #f8f9fa; 
+}*/
+
+.text-primary { color: #007bff !important; }
+.text-danger { color: #dc3545 !important; }
+.text-success { color: #28a745 !important; }
+
+
+.row.mb-4 .card {
+    transition: all 0.3s ease-in-out;
+    border-radius: 10px; 
+}
+
+.row.mb-4 .card:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); 
+}
+
+.border-primary.border-5 {
+    border-left-width: 8px !important;
+    border-left-color: #007bff !important; 
+}
+
+.border-info.border-5 {
+    border-left-width: 8px !important;  
+    border-left-color: #0dcaf0 !important;  
+}
+
+.border-success.border-5 {
+    border-left-width: 8px !important;  
+    border-left-color: #198754 !important;   
+}
+
+.border-warning.border-5 {
+    border-left-width: 8px !important; 
+    border-left-color: #ffc107 !important;  
+}
+
+.student-search-card {
+    border-radius: 18px !important;
+    padding: 30px 40px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);  
+    transition: all 0.3s ease;
+    border: none !important;
+    background-color: rgba(255, 255, 255, 0.95); 
+}
+
+.student-search-card:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);  
+    transform: translateY(-2px);
+}
+
+.roll-input {
+    border-radius: 12px !important;
+    font-size: 1.1rem;
+    padding: 15px;
+}
+
+.find-seat-btn {
+    border-radius: 12px !important;
+    font-size: 1.25rem !important;
+    padding: 15px 25px !important;
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4); 
+    transition: all 0.3s ease;
+}
+
+ .invigilator-card {
+    border-radius: 12px !important;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08) !important;
+    border: none !important;
+    background-color: #ffffff !important;
+    transition: all 0.3s ease;
+} 
+
+/* .invigilator-card {
+    background-color: rgba(255, 255, 255, 0.95) !important;  Halka transparent white 
+    border-radius: 15px !important;  Proper rounding 
+    backdrop-filter: blur(5px);  Glassy Blur Effect 
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;  Soft white border 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;  Soft shadow 
+    transition: all 0.3s ease;
+}
+.invigilator-card:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15) !important;
+    transform: translateY(-2px);
+}
+
+ Card Header/Title ko clean rakhte hain 
+.invigilator-card .card-header {
+    background-color: transparent !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;  Halka separator 
+    padding: 15px 20px;
+}
+
+ Room Select Dropdown ko zyada visible banao 
+#roomSelect {
+    font-size: 1.05rem;
+    padding: 12px;
+    border-radius: 10px;
+}
+
+ Room Info Details: Clearer structure 
+#roomInfo h6 {
+    border-bottom: 2px solid #007bff;  Primary color separator 
+    padding-bottom: 5px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #007bff;
+}
+
+ Export Button ko thoda elegant banao 
+.export-btn-fix {
+    margin-top: 15px !important;
+    padding: 10px 15px !important;
+    border-radius: 8px !important;
+}
+
+ Visual Seat Map (Readability and look) 
+.seat-map-table {
+     Seats ko aur zyada card-like look dene ke liye spacing badhaya 
+    border-spacing: 8px; 
+}
+
+ Allocated Seat Cell 
+.seat-allocated {
+    background-color: #d4edda;  Light Success 
+    border: 2px solid #198754; 
+}
+.seat-allocated:hover {
+    background-color: #c3e6cb;
+    box-shadow: 0 0 10px rgba(25, 135, 84, 0.5); 
+}
+
+ Student List Table Readability (Final Touch) 
+.student-list-table th {
+    background-color: #f0f8ff !important;  Very light blue header 
+    color: #333 !important;  Dark text 
+    vertical-align: middle;
+} */
+
+.invigilator-card {
+    /* Halka transparent white */
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    /* Proper rounding */
+    border-radius: 15px !important;
+    /* Glassy Blur Effect */
+    backdrop-filter: blur(5px);
+    /* Soft white border */
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    /* Soft shadow */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.3s ease;
+}
+
+.invigilator-card:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15) !important;
+    transform: translateY(-2px);
+}
+
+/* Card Header/Title ko clean rakhte hain */
+.invigilator-card .card-header {
+    background-color: transparent !important;
+    /* Halka separator */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+    padding: 15px 20px;
+}
+
+/* Room Select Dropdown ko zyada visible banao */
+#roomSelect {
+    font-size: 1.05rem;
+    padding: 12px;
+    border-radius: 10px;
+}
+
+/* Room Info Details: Clearer structure */
+#roomInfo h6 {
+    /* Primary color separator */
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 5px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #007bff;
+}
+
+/* Export Button ko thoda elegant banao */
+.export-btn-fix {
+    margin-top: 15px !important;
+    padding: 10px 15px !important;
+    border-radius: 8px !important;
+}
+
+/* Visual Seat Map (Readability and look) */
+.seat-map-table {
+    /* Seats ko aur zyada card-like look dene ke liye spacing badhaya */
+    border-spacing: 8px; 
+}
+
+/* Allocated Seat Cell */
+.seat-allocated {
+    /* Light Success */
+    background-color: #d4edda;
+    border: 2px solid #198754; 
+}
+
+.seat-allocated:hover {
+    background-color: #c3e6cb;
+    box-shadow: 0 0 10px rgba(25, 135, 84, 0.5); 
+}
+
+/* Student List Table Readability (Final Touch) */
+.student-list-table th {
+    /* Very light blue header */
+    background-color: #f0f8ff !important;
+    /* Dark text */
+    color: #333 !important;
+    vertical-align: middle;
+}
+ Attendance Checkbox Size Fix 
+.form-check-input {
+    width: 1.25em;
+    height: 1.25em;
+}
+
+ #roomSelect {
+    font-size: 1.05rem;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
+}
+
+#roomInfo h6 {
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+} 
+
+ .student-list-table {
+    --bs-table-hover-bg: #e0f7fa;  
+} 
+
+ .student-list-table th, .student-list-table td {
+    vertical-align: middle;  
+} 
+
+ .seat-map-table {
+    border-collapse: separate;
+    border-spacing: 5px; 
+} 
+
+.seat-map-table td {
+    padding: 0 !important;
+    border-radius: 8px;  
+    transition: all 0.2s ease;
+    border: none !important;
+    height: 60px;  
+}
+
+.seat-cell {
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.seat-allocated {
+    background-color: #d4edda;  
+    border: 2px solid #198754;  
+}
+ 
+.seat-empty {
+    background-color: #f8f9fa; 
+    border: 2px dashed #adb5bd;  
+}
+
+ .seat-allocated:hover {
+    background-color: #c3e6cb;
+    box-shadow: 0 0 10px rgba(25, 135, 84, 0.5);  
+} 
+.find-seat-btn:hover {
+    box-shadow: 0 12px 30px rgba(0, 123, 255, 0.6); 
+    transform: translateY(-2px);
+}
+
+ */
+.card-header {
+    background-color: transparent; 
+    border-bottom: none; 
+    font-weight: 500;
+    padding-bottom: 0.5rem;
+}
+
+
+.card.h-100 {
+    border-left: 5px solid transparent; 
+    transition: border-left-color 0.4s ease;
+}
+
+
+.card .text-primary {
+    border-left-color: #007bff !important; 
+}
+.card:has(.text-primary):hover {
+    border-left-color: #007bff !important;
+}
+
+
+.card .text-danger {
+    border-left-color: #dc3545 !important;
+}
+.card:has(.text-danger):hover {
+    border-left-color: #dc3545 !important;
+}
+
+.card .text-success {
+    border-left-color: #28a745 !important;
+}
+.card:has(.text-success):hover {
+    border-left-color: #28a745 !important;
+}
+
+.card-title {
+    font-weight: 700 !important; 
+}
+
+.glass-card {
+    background-color: rgba(255, 255, 255, 0.95) !important; 
+    border-radius: 20px !important;  
+    backdrop-filter: blur(5px);  
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;  
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15) !important;  
+    transition: all 0.5s ease;
+}
+
+.glass-card:hover {
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25) !important;
+    transform: translateY(-5px);  
+}
+
+.list-unstyled li {
+    padding: 5px 0;
+    border-bottom: 1px dashed #f0f0f0;  
+    font-size: 1.05rem;
+    color: #343a40;
+}
+
+.list-unstyled li:last-child {
+    border-bottom: none; 
+}
+
+.list-unstyled i {
+    margin-right: 10px;
+}
+ 
+.row.mb-4 .card-body h3.card-title {
+    font-size: 2.5rem; 
+    font-weight: 700;
+}
+
+
+.alert {
+    border-radius: 8px;
+}
+
+.btn {
+    border-radius: 6px;
+    
+}
+
+.main-divider {
+    width: 80px; 
+    border: none;
+    height: 3px;
+    background-color: #007bff; 
+    border-radius: 50px;
+    opacity: 1; 
+}
+
+
+.btn-info {
+    background-color: #17a2b8 !important; 
+    border-color: #17a2b8 !important;
+}
+ 
+.generate-btn-shadow {
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4); 
+    transition: all 0.3s ease;
+}
+
+.generate-btn-shadow:hover {
+    box-shadow: 0 8px 20px rgba(40, 167, 69, 0.6);
+    transform: translateY(-1px);
+}
+ 
+input[type="file"] {
+    border: 1px dashed #ced4da; 
+    background-color: #fff;
+}
+
+.form-control, .form-select {
+    border-radius: 6px;
+}
+
+
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+}
+
+#messageArea .alert {
+    animation: slideIn 0.3s ease-in;
+}
+
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.custom-file-input {
+    display: none; 
+}
+.upload-group {
+    display: flex;
+    align-items: center;
+    border: 2px dashed #007bff; 
+    border-radius: 10px;
+    background-color: #f0faff; 
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.upload-group:hover {
+    background-color: #e9f7fe; 
+    border-color: #0056b3; 
+}
+
+.upload-btn {
+    flex-shrink: 0;  
+    margin-left: 10px;
+    border-radius: 8px; 
+}
+
+.alert {
+    border-radius: 8px;
+}
+
+.seat-map-legend {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+ 
+.seat-map-table {
+    border-collapse: separate;
+    border-spacing: 5px; 
+    width: 100%;
+}
+
+.seat-map-table td {
+    padding: 0; 
+    border: none;
+    background-color: transparent;
+}
+
+.seat-cell {
+    padding: 12px 5px; 
+    border-radius: 8px; 
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
+}
+
+.seat-allocated .seat-cell {
+    background-color: #198754; 
+    color: #fff; 
+    cursor: pointer;
+}
+
+.seat-allocated:hover .seat-cell {
+    background-color: #157347; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.seat-empty .seat-cell {
+    background-color: #e9ecef; 
+    color: #6c757d;
+}
+
+
+.display-4 {
+    font-weight: 800;
+    color: #343a40; 
+}
+
+.lead {
+    color: #6c757d; 
+    font-size: 1.25rem;
+}
+
+
+.quick-access-btn {
+    border-radius: 10px !important;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15) !important; 
+    font-size: 1.15rem;
+    padding: 18px 25px; 
+}
+
+.quick-access-btn:hover {
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3) !important; 
+    transform: translateY(-4px); 
+}
+
+.quick-access-btn i {
+    margin-right: 10px; 
+}
+
+
+.quick-access-box {
+    background-color: #f0faff; 
+    border: 1px solid #d0e8ff; 
+    border-radius: 12px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1) !important; 
+    transition: all 0.4s ease;
+}
+
+.quick-access-box:hover {
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.2) !important;
+    transform: translateY(-3px);  
+}
+
+.features-section {
+    background-color: #e9f7fe; 
+    padding: 40px 0;
+    margin: 40px -15px;  
+    border-radius: 15px;
+}
+
+
+footer {
+    background-color: #f5f7fa !important; 
+    color: #6c757d;
+    font-size: 0.9rem;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+    border-top: 1px solid #e9ecef;
+}
+
+.tooltip-inner {
+    max-width: 300px;
+    white-space: pre-line;
+} 
+
+.upload-group {
+    display: flex;
+    align-items: center;
+    border: 2px dashed #007bff; 
+    border-radius: 10px;
+    background-color: #f0faff; 
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+

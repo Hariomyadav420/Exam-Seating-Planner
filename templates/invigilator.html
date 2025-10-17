@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+
+{% block title %}Invigilator Panel{% endblock %}
+
+{% block content %}
+<h1 class="mb-4"><i class="bi bi-clipboard-check"></i> Invigilator Panel</h1>
+
+<div class="row">
+    <div class="col-lg-4 mb-4">
+        <div class="card invigilator-card">
+            <div class="card-header">
+                <h5 class="mb-0">Select Room</h5>
+            </div>
+            <div class="card-body">
+                <select class="form-select" id="roomSelect" onchange="loadRoom()">
+                    <option value="">-- Select a Room --</option>
+                    {% for room in rooms %}
+                    <option value="{{ room['room_no'] }}">{{ room['room_no'] }} - {{ room['building'] }}</option>
+                    {% endfor %}
+                </select>
+                
+                <div id="roomInfo" class="mt-3" style="display: none;">
+                    <h6>Room Details</h6>
+                    <p class="mb-1"><strong>Building:</strong> <span id="roomBuilding"></span></p>
+                    <p class="mb-1"><strong>Capacity:</strong> <span id="roomCapacity"></span></p>
+                    <p class="mb-1"><strong>Dimensions:</strong> <span id="roomDimensions"></span></p>
+                    <p class="mb-1"><strong>Allocated:</strong> <span id="roomAllocated"></span></p>
+                    
+                    <button class="btn btn-success btn-sm w-100 mt-2" onclick="exportRoomList()">
+                        <i class="bi bi-file-earmark-spreadsheet"></i> Export Room List
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card invigilator-card">
+            <div class="card-header">
+                <h5 class="mb-0">Visual Seat Map</h5>
+            </div>
+            <div class="card-body">
+                <div id="seatMapArea">
+                    <p class="text-muted text-center">Please select a room to view the seat map</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4 invigilator-card">
+            <div class="card-header">
+                <h5 class="mb-0">Student List</h5>
+            </div>
+            <div class="card-body">
+                <div id="studentListArea">
+                    <p class="text-muted text-center">Please select a room to view students</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let currentRoom = null;
+let roomData = null;
+
+function loadRoom() {
+    const roomNo = document.getElementById('roomSelect').value;
+    
+    if (!roomNo) {
+        document.getElementById('roomInfo').style.display = 'none';
+        document.getElementById('seatMapArea').innerHTML = '<p class="text-muted text-center">Please select a room to view the seat map</p>';
+        document.getElementById('studentListArea').innerHTML = '<p class="text-muted text-center">Please select a room to view students</p>';
+        return;
+    }
+    
+    currentRoom = roomNo;
+    
+    fetch(`/api/room/${roomNo}/allocations`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                roomData = data;
+                displayRoomInfo(data.room);
+                displaySeatMap(data.room, data.allocations);
+                displayStudentList(data.allocations);
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            alert('Error loading room data: ' + error.message);
+        });
+}
+
+function displayRoomInfo(room) {
+    document.getElementById('roomBuilding').textContent = room.building;
+    document.getElementById('roomCapacity').textContent = room.capacity;
+    document.getElementById('roomDimensions').textContent = `${room.rows} rows × ${room.columns} columns`;
+    
+    const allocated = Object.keys(roomData.allocations).length;
+    document.getElementById('roomAllocated').textContent = `${allocated} / ${room.capacity} (${Math.round(allocated / room.capacity * 100)}%)`;
+    
+    document.getElementById('roomInfo').style.display = 'block';
+}
+
+function displaySeatMap(room, allocations) {
+    let html = '<div class="seat-map-legend mb-3">';
+    html += '<span class="badge bg-success me-2">Allocated</span>';
+    html += '<span class="badge bg-secondary">Empty</span>';
+    html += '</div>';
+    
+    html += '<div class="table-responsive">';
+    html += '<table class="table table-bordered table-sm seat-map-table">';
+    
+    for (let row = 1; row <= room.rows; row++) {
+        html += '<tr>';
+        for (let col = 1; col <= room.columns; col++) {
+            const key = `${row}-${col}`;
+            const allocation = allocations[key];
+            
+            if (allocation) {
+                html += `<td class="seat-allocated" data-bs-toggle="tooltip" title="Roll: ${allocation.roll_no}\nName: ${allocation.name}\nSubject: ${allocation.subject_code}">`;
+                html += `<div class="seat-cell">${allocation.seat_number}</div>`;
+                html += '</td>';
+            } else {
+                html += '<td class="seat-empty"><div class="seat-cell">Empty</div></td>';
+            }
+        }
+        html += '</tr>';
+    }
+    
+    html += '</table></div>';
+    
+    document.getElementById('seatMapArea').innerHTML = html;
+    
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+}
+
+function displayStudentList(allocations) {
+    const students = Object.values(allocations);
+    
+    if (students.length === 0) {
+        document.getElementById('studentListArea').innerHTML = '<p class="text-muted text-center">No students allocated to this room</p>';
+        return;
+    }
+    
+    students.sort((a, b) => a.seat_number.localeCompare(b.seat_number));
+    
+    let html = '<div class="table-responsive">';
+    html += '<table class="table student-list-table table-striped table-hover">';
+    html += '<thead><tr>';
+    html += '<th>Seat</th><th>Roll No</th><th>Name</th><th>Course</th><th>Subject</th><th>Attendance</th>';
+    html += '</tr></thead><tbody>';
+    
+    students.forEach(student => {
+        html += '<tr>';
+        html += `<td><strong>${student.seat_number}</strong></td>`;
+        html += `<td>${student.roll_no}</td>`;
+        html += `<td>${student.name}</td>`;
+        html += `<td>${student.course}</td>`;
+        html += `<td>${student.subject_code}</td>`;
+        html += `<td><input type="checkbox" class="form-check-input" id="att-${student.roll_no}"></td>`;
+        html += '</tr>';
+    });
+    
+    html += '</tbody></table></div>';
+    
+    document.getElementById('studentListArea').innerHTML = html;
+}
+
+function exportRoomList() {
+    if (!currentRoom) {
+        alert('Please select a room first');
+        return;
+    }
+    
+    window.location.href = `/api/room/${currentRoom}/export`;
+}
+</script>
+
+<style>
+.seat-map-table td {
+    padding: 5px;
+    text-align: center;
+    min-width: 100px;
+}
+
+.seat-cell {
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.seat-allocated {
+    background-color: #d4edda;
+    cursor: pointer;
+}
+
+.seat-allocated:hover {
+    background-color: #c3e6cb;
+}
+
+.seat-empty {
+    background-color: #e9ecef;
+}
+</style>
+{% endblock %}

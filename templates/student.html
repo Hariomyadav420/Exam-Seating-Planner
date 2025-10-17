@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}Student Portal{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-6 mx-auto">
+        <h1 class="text-center mb-4"><i class="bi bi-person"></i> Student Portal</h1>
+
+        <div class="card student-search-card">
+            <div class="card-header">
+                <h5 class="mb-0">Check Your Seat Allocation</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="rollNumber" class="form-label">Enter Your Roll Number</label>
+                    <input type="text" class="form-control roll-input" id="rollNumber" placeholder="e.g., 2024001">
+                </div>
+                <button class="btn btn-primary w-100 find-seat-btn" onclick="checkSeat()">
+                    <i class="bi bi-search"></i> Find My Seat
+                </button>
+            </div>
+        </div>
+
+        <div id="resultArea" class="mt-4"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function checkSeat() {
+    const rollNo = document.getElementById('rollNumber').value.trim();
+    const resultArea = document.getElementById('resultArea');
+    
+    if (!rollNo) {
+        resultArea.innerHTML = `
+            <div class="alert alert-warning">
+                <i class="bi bi-exclamation-triangle"></i> Please enter your roll number
+            </div>
+        `;
+        return;
+    }
+    
+    resultArea.innerHTML = `
+        <div class="text-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Searching for your seat...</p>
+        </div>
+    `;
+    
+    fetch(`/api/student/${rollNo}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const student = data.data;
+                resultArea.innerHTML = `
+                    <div class="card border-success">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0"><i class="bi bi-check-circle"></i> Seat Found!</h5>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-title">Student Details</h6>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td><strong>Name:</strong></td>
+                                    <td>${student.name}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Roll Number:</strong></td>
+                                    <td>${student.roll_no}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Course:</strong></td>
+                                    <td>${student.course}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Semester:</strong></td>
+                                    <td>${student.semester}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Subject Code:</strong></td>
+                                    <td>${student.subject_code}</td>
+                                </tr>
+                            </table>
+                            
+                            <hr>
+                            
+                            <h6 class="card-title">Exam Hall Details</h6>
+                            <div class="alert alert-info">
+                                <p class="mb-2"><strong>Room:</strong> ${student.room_no}</p>
+                                <p class="mb-2"><strong>Building:</strong> ${student.building}</p>
+                                <p class="mb-2"><strong>Seat Number:</strong> <span class="badge bg-primary fs-6">${student.seat_number}</span></p>
+                                <p class="mb-0"><strong>Position:</strong> Row ${student.row}, Column ${student.column}</p>
+                            </div>
+                            
+                            <div class="d-grid">
+                                <a href="/api/download_admit_card/${student.roll_no}" class="btn btn-danger btn-lg" target="_blank">
+                                    <i class="bi bi-file-earmark-pdf"></i> Download Admit Card (PDF)
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                resultArea.innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="bi bi-x-circle"></i> ${data.message}
+                    </div>
+                `;
+            }
+        })
+        .catch(error => {
+            resultArea.innerHTML = `
+                <div class="alert alert-danger">
+                    <i class="bi bi-x-circle"></i> Error: ${error.message}
+                </div>
+            `;
+        });
+}
+
+document.getElementById('rollNumber').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        checkSeat();
+    }
+});
+</script>
+{% endblock %}

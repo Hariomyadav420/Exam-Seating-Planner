@@ -1,0 +1,88 @@
+Core Functionality (MVP)
+The application must include the following features:
+
+1. Data Management
+Input: Allow users to upload two separate Excel or CSV files: one for student data and one for room data.
+
+Student data: Must include columns for Roll No, Name, Course/Program, Semester, Email, and Subject Code.
+
+Room data: Must include columns for Room No, Building, Rows, Columns, and Capacity.
+
+Database: Use SQLite for simple, server-less data storage.
+
+Validation: Implement basic validation to check for:
+
+Duplicate student roll numbers.
+
+Sufficient room capacity for the number of students.
+
+2. Seating Allocation Engine
+Primary Algorithm: Implement the Anti-Cheating Allocation Algorithm.
+
+Group students by their Subject Code.
+
+Ensure that students with the same Subject Code are separated by at least two seats.
+
+Randomize student placement while adhering to the separation constraint.
+
+Fallback: Include a simple "Rollwise Allocation" option that sorts students by roll number and allocates them sequentially.
+
+3. Output Generation
+PDF Admit Cards: For each student, generate an individual PDF admit card containing:
+
+Student's Name and Roll No.
+
+Assigned seat details (Room, Row, Column).
+
+A QR code that encodes the student's Roll No, Room No, and Seat Position. Use libraries like qrcode and ReportLab.
+
+Excel Export: Generate a single Excel file that contains the complete seating plan, showing each student's assigned seat details.
+
+4. Web Interface
+Framework: Use Flask to build the web application.
+
+User Flow: Create a simple, intuitive user experience with the following pages:
+
+Home Page: A landing page with a brief project description.
+
+Upload Page: A form with two file upload fields (one for students, one for rooms).
+
+Generate Page: After uploading, show a summary of students and rooms. Provide a button to "Generate Seating Plan" using the anti-cheating algorithm.
+
+Results Dashboard: Upon successful generation, display a summary of the allocation (e.g., total students allocated, number of rooms used). Provide buttons to download the ZIP file of PDF admit cards and the full Excel seating plan.
+
+Technical Specifications
+Backend: Python 3.8+
+
+Framework: Flask
+
+Libraries:
+
+pandas for data handling (reading CSV/Excel).
+
+openpyxl for Excel file operations.
+
+sqlite3 for database interaction.
+
+qrcode for generating QR codes.
+
+ReportLab for PDF generation.
+
+python-dotenv for managing environment variables.
+
+Frontend: HTML, CSS, JavaScript (no complex frameworks needed).
+
+Design a simple, mobile-friendly interface.
+
+Project Structure: Organize the project with a standard Flask folder structure, including app.py, templates/, and static/ folders.
+
+README: Include a README.md file with clear instructions on how to set up and run the application.
+
+Non-Functional Requirements
+Code Quality: The code must be clean, well-commented, and easy to understand for presentation.
+
+Documentation: The README.md should explain the core functionality, the tech stack used, and the steps to run the application (pip install -r requirements.txt, etc.).
+
+Scalability: While this is an MVP, the core allocation logic should be designed with scalability in mind to handle larger datasets.
+
+Final deliverable: A single, complete project folder that can be zipped and shared. The project should be runnable with a single command (python app.py) after dependencies are installed.

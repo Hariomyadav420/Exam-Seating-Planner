@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<h1 class="mb-4"><i class="bi bi-gear"></i> Admin Dashboard</h1>
+
+<!-- Dashboard Summary -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-center border-start border-primary border-5 h-100">
+            <div class="card-body">
+                <h3 class="card-title">{{ student_count }}</h3>
+                <p class="card-text text-muted">Students</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center border-start border-info border-5 h-100">
+            <div class="card-body">
+                <h3 class="card-title">{{ room_count }}</h3>
+                <p class="card-text text-muted">Rooms</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center border-start border-success border-5 h-100">
+            <div class="card-body">
+                <h3 class="card-title">{{ allocation_count }}</h3>
+                <p class="card-text text-muted">Allocations</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center border-start border-warning border-5 h-100">
+            <div class="card-body">
+                <h3 class="card-title" id="utilization">0%</h3>
+                <p class="card-text text-muted">Utilization</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Upload Section -->
+<div class="row">
+    <div class="col-lg-8">
+
+        <!-- Upload Data Card -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Upload Data</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-4">
+                    <label class="form-label"><strong>Student Data (CSV/Excel)</strong></label>
+                    <p class="small text-muted">Required columns: Roll No, Name, Course/Program, Semester, Email, Subject Code</p>
+                    <input type="file" id="studentFile" accept=".csv,.xlsx,.xls" class="form-control mb-2">
+                    <button class="btn btn-primary" type="button" onclick="uploadStudents()">
+                        <i class="bi bi-cloud-arrow-up"></i> Upload Students
+                    </button>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label"><strong>Room Data (CSV/Excel)</strong></label>
+                    <p class="small text-muted">Required columns: Room No, Building, Rows, Columns, Capacity</p>
+                    <input type="file" id="roomFile" accept=".csv,.xlsx,.xls" class="form-control mb-2">
+                    <button class="btn btn-primary" type="button" onclick="uploadRooms()">
+                        <i class="bi bi-cloud-arrow-up"></i> Upload Rooms
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Generate Seating Plan -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Generate Seating Plan</h5>
+            </div>
+            <div class="card-body">
+                <label class="form-label"><strong>Allocation Method</strong></label>
+                <select class="form-select mb-3" id="allocationMethod">
+                    <option value="anti-cheating">🧩 Anti-Cheating (Zig-Zag + 2 Courses)</option>
+                    <option value="rollwise">Roll-wise Sequential</option>
+                    <option value="random">Random</option>
+                </select>
+                <button class="btn btn-success btn-lg w-100 generate-btn-shadow" onclick="generateAllocation()">
+                    <i class="bi bi-shuffle"></i> Generate Seating Plan
+                </button>
+            </div>
+        </div>
+
+        <!-- Seat Swap / Modification -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Admin: Seat Swap / Modification</h5>
+            </div>
+            <div class="card-body">
+                <p class="small text-muted">Swap seats between two students (Admin only). Enter roll numbers exactly as stored.</p>
+                <div class="row g-2 align-items-center">
+                    <div class="col-5">
+                        <input type="text" id="swapRoll1" class="form-control" placeholder="Roll No (to move)" />
+                    </div>
+                    <div class="col-2 text-center">
+                        <div style="font-size: 1.6rem;">↔</div>
+                    </div>
+                    <div class="col-5">
+                        <input type="text" id="swapRoll2" class="form-control" placeholder="Roll No (swap with)" />
+                    </div>
+                </div>
+
+                <div class="mt-3 d-grid">
+                    <button class="btn btn-warning" id="swapBtn" onclick="swapSeats()">
+                        <i class="bi bi-arrow-left-right"></i> Swap Seats
+                    </button>
+                </div>
+
+                <small class="text-muted d-block mt-2">This action will be logged. Use carefully.</small>
+            </div>
+        </div>
+
+        <!-- Export -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Export Options</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-danger" onclick="generateAdmitCards()">
+                        <i class="bi bi-file-earmark-pdf"></i> Generate All Admit Cards (PDF)
+                    </button>
+                    <button class="btn btn-success" onclick="exportExcel()">
+                        <i class="bi bi-file-earmark-spreadsheet"></i> Export Seating Plan (Excel)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Sidebar -->
+    <div class="col-lg-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Room Utilization</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="utilizationChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Recent Activity</h5>
+            </div>
+            <div class="card-body">
+                <div id="activityLog" style="max-height: 300px; overflow-y: auto;">
+                    {% if recent_activities %}
+                    {% for activity in recent_activities %}
+                    <div class="mb-2 pb-2 border-bottom">
+                        <small class="text-muted">{{ activity['timestamp'] }}</small>
+                        <p class="mb-0">{{ activity['description'] }}</p>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <p class="text-muted">No activities yet</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="messageArea" class="mt-3"></div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}

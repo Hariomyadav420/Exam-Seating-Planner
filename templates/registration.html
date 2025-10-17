@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration - Enhanced Heading</title>
+    <style>
+        /* General body and container styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f8ff; /* Light blue background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .register-container {
+            background: #ffffff;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 50, 100, 0.15);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            border: 1px solid #e3f2fd;
+            transform: scale(1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .register-container:hover {
+            transform: scale(1.01);
+        }
+
+        /* Title styling (ENHANCED) */
+        .register-title {
+            /* Increased size and boldness for visibility */
+            margin-bottom: 35px; /* More space below the heading */
+            color: #003366; /* Darker, more prominent navy blue */
+            font-size: 2.5rem; /* Larger font size */
+            font-weight: 800; /* Extra bold */
+            letter-spacing: 1px; /* Spacing for a cleaner look */
+            /* Added a subtle line for emphasis */
+            padding-bottom: 10px;
+            border-bottom: 3px solid #b3e5fc; /* Light blue underline */
+        }
+
+        /* Form group and input styling */
+        .register-form .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .register-form label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #5a5a5a;
+            font-size: 1rem;
+        }
+
+        .register-form input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #b3e5fc;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .register-form input::placeholder {
+            color: #a0a0a0;
+        }
+
+        .register-form input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+            outline: none;
+        }
+
+        /* Button styling */
+        .register-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            background-color: #28a745; /* Green button for "Register" */
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-top: 15px;
+        }
+
+        .register-btn:hover {
+            background-color: #218838;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .register-btn:active {
+            transform: translateY(0);
+            background-color: #1e7e34;
+        }
+
+        /* Error message styling */
+        .error-message {
+            color: #d9534f;
+            background-color: #ffebee;
+            border: 1px solid #f2b3b3;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: left;
+            font-size: 0.9rem;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h2 class="register-title">Create an Account</h2>
+            <form class="register-form" method="POST" action="{{ url_for('register') }}">
+                       
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+    <label for="email">Email Address</label>
+    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+</div>
+
+<div class="form-group">
+    <label for="phone">Phone Number</label>
+    <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+</div>
+
+<div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" placeholder="Create a password" required>
+</div>
+
+<div class="form-group">
+    <label for="confirm_password">Confirm Password</label>
+    <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required>
+</div>
+        
+            <div id="error-message" class="error-message"></div>
+                  <button type="submit" class="register-btn">Register</button>
+               
+        </form>   </div>
+        </body>
+        
+        </html>
+        <!-- <h2 class="register-title">Create an Account</h2>
+            <form method="POST" action="{{ url_for('register') }}"></form>
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Create a password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required>
+            </div>
+
+            <div id="error-message" class="error-message"></div>
+            <button type="submit" class="register-btn">Register</button>
+        </form>
+    </div>
+</body>
+</html> -->
