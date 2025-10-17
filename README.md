@@ -1,1 +1,1 @@
-# LawdaLassan
+# Exam-Seating-Planner
